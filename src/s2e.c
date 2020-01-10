@@ -220,7 +220,7 @@ static ustime_t _calcAirTime (rps_t rps, u1_t plen, u1_t nocrc) {
     }
     sf = 7 + (sf - SF7)*(SF8-SF7); // map enums SF7..SF12 to 7..12
     u1_t sfx = 4*sf;
-    u1_t q = sfx - (sf >= 11 && bw == 0 ? 8 : 0);  
+    u1_t q = sfx - (sf >= 11 && bw == 0 ? 8 : 0);
     u1_t ih = 0;     // station never sends with implicit header
     u1_t cr = 0;     // CR_4_5=0, CR_4_6, CR_4_7, CR_4_8
     int tmp = 8*plen - sfx + 28 + (nocrc?0:16) - (ih?20:0);
@@ -320,7 +320,7 @@ static void check_dnfreq (s2ctx_t* s2ctx, ujdec_t* ujd, u4_t* pfreq, u1_t* pchnl
     *pfreq = freq;
     // Find and assign a DN channel to this freq.
     // This channel index is only used locally to tracking duty cycle
-    
+
     int ch;
     for( ch=0; ch<MAX_DNCHNLS; ch++ ) {
         if( s2ctx->dn_chnls[ch] == 0 )
@@ -469,7 +469,7 @@ static int s2e_canTxEU863 (s2ctx_t* s2ctx, txjob_t* txjob, int* ccaDisabled) {
     ustime_t txtime = txjob->txtime;
     ustime_t band_exp = s2ctx->txunits[txjob->txunit].dc_eu863bands[freq2band(txjob->freq)];
     if( txtime >= band_exp ) {
-        
+
         return 1;   // clear channel analysis not required
     }
     // No DC in band
@@ -793,7 +793,7 @@ static int handle_router_config (s2ctx_t* s2ctx, ujdec_t* D) {
                 uj_exitArray(D);
                 jlistlen = min(off, MAX_JOINEUI_RANGES);
                 s2e_joineuiFilter[2*jlistlen] = 0; // terminate list
-                
+
             }
             break;
         }

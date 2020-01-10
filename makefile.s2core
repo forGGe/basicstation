@@ -18,6 +18,7 @@ all: ${TARGET}
 
 ../bin/station: station_main.c ../lib/libs2core.a
 	@echo " [${ARCH}] CC   $@" ${NQ}
+	@echo ${Q}${CC} ${CFLAGS} ${LDFLAGS} $^ ${LIBS} -o $@
 	${Q}${CC} ${CFLAGS} ${LDFLAGS} $^ ${LIBS} -o $@
 	@echo " platform=${platform} variant=${variant} STATION EXE built"
 

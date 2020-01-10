@@ -16,14 +16,15 @@ variant  ?= std
 
 LOCAL_ARCH := $(shell gcc -dumpmachine)
 
-ARCH.linux   = x86_64-linux-gnu
-ARCH.rpi     = arm-linux-gnueabihf
-ARCH.kerlink = arm-klk-linux-gnueabi
+ARCH.linux    = x86_64-linux-gnu
+ARCH.rpi      = arm-linux-gnueabihf
+ARCH.kerlink  = arm-klk-linux-gnueabi
+ARCH.tektelic = arm-linux-gnueabihf
 ARCH=${ARCH.${platform}}
 
 export TDfull := $(shell cd ${TD} && pwd)
-TOOLCHAIN=${HOME}/toolchain-${platform}
-
+toolchain ?= ${HOME}/toolchain-${platform}
+TOOLCHAIN=${toolchain}
 
 ifeq (,$(wildcard ${TOOLCHAIN}))
 # No toolchain for cross compile - only ok if we can build locally
@@ -69,9 +70,10 @@ CFG.debug   = logini_lvl=DEBUG selftests tlsdebug ral_lgw
 CFG.debugn  = logini_lvl=DEBUG selftests tlsdebug ral_master_slave
 
 # -- Platform specific
-CFG.linux   = linux lgw1 no_leds
-CFG.rpi     = linux lgw1 no_leds
-CFG.kerlink = linux lgw1 no_leds
+CFG.linux     = linux lgw1 no_leds
+CFG.rpi       = linux lgw1 no_leds
+CFG.kerlink   = linux lgw1 no_leds
+CFG.tektelic  = linux lgw1 no_leds
 
 SD.default = src-linux
 
@@ -104,9 +106,10 @@ CFLAGS.linux.testfs   = -g -O0 --coverage
 CFLAGS.linux.testpin  = -g -O3
 CFLAGS.linux.std      = -g -O3
 
-LIBS.linux   = -llgw   ${MBEDLIBS}      -lpthread
-LIBS.rpi     = -llgw   ${MBEDLIBS}      -lpthread
-LIBS.kerlink = -llgw   ${MBEDLIBS} -lrt -lpthread
+LIBS.linux    = -llgw   ${MBEDLIBS}      -lpthread
+LIBS.rpi      = -llgw   ${MBEDLIBS}      -lpthread
+LIBS.kerlink  = -llgw   ${MBEDLIBS} -lrt -lpthread
+LIBS.tektelic = -llgw   ${MBEDLIBS}      -lpthread
 
 xCFG     =     ${CFG.${ARCH}}     ${CFG.${platform}}     ${CFG.${variant}}    ${CFG.${platform}.${variant}}
 xCFLAGS  =  ${CFLAGS.${ARCH}}  ${CFLAGS.${platform}}  ${CFLAGS.${variant}} ${CFLAGS.${platform}.${variant}}
